@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MenyItem from "../menu-item/MenyItem";
 import "./directory.styles.scss";
 
@@ -40,8 +40,8 @@ const sections = [
 const Directory = () => {
   return (
     <div className="directory-menu">
-      {sections.map(({ title, imageUrl, id, size }) => (
-        <MenyItem key={id} title={title} imageURL={imageUrl} size={size} />
+      {sections.map(({ id, ...otherSectionProps }) => (
+        <MenyItem key={id} {...otherSectionProps} />
       ))}
     </div>
   );
