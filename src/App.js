@@ -4,25 +4,25 @@ import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
 import FormsPage from "./pages/forms/FormsPage";
-import Hats from "./pages/hats/Hats";
+// import Hats from "./pages/hats/Hats";
 import HomePage from "./pages/homapage/HomePage";
 import ShopPage from "./pages/shop/ShopPage";
-import { auth } from "./firebase/firebase.util";
+import { auth, createUserProfileDocument } from "./firebase/firebase.util";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
-  const unsubscribeFromAuth = () => null;
-
   useEffect(() => {
-    unsubscribeFromAuth(
-      auth.onAuthStateChanged((user) => {
-        setCurrentUser(user);
-        console.log(user);
-      })
-    );
-    return unsubscribeFromAuth();
-  }, [currentUser]);
+    auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          setCurrentUser({ id: snapShot.id, ...snapShot.data() });
+        });
+      } else setCurrentUser(userAuth);
+    });
+  }, []);
 
   return (
     <div>

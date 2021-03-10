@@ -1,26 +1,33 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+
 import CustomButtom from "../custom-button/CustomButtom";
 import FormInput from "../form-input/FormInput";
 
 import "./sign-in.styles.scss";
 
-import { signInWithGoogle } from "../../firebase/firebase.util";
+import { auth, signInWithGoogle } from "../../firebase/firebase.util";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [succsess, setSuccsess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setEmail("");
-    setPassword("");
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+
+      setEmail("");
+      setPassword("");
+      setSuccsess(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    name === "email" ? setEmail(value) : setPassword(value);
-  };
+  if (succsess) return <Redirect to="/" />;
 
   return (
     <div className="sign-in">
@@ -34,7 +41,7 @@ const SignIn = () => {
           name="email"
           type="email"
           value={email}
-          handleChange={handleChange}
+          handleChange={(e) => setEmail(e.target.value)}
           label="Email"
           required
         />
@@ -43,7 +50,7 @@ const SignIn = () => {
           name="password"
           type="password"
           value={password}
-          handleChange={handleChange}
+          handleChange={(e) => setPassword(e.target.value)}
           label="Password"
           required
         />
