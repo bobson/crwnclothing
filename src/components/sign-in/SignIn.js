@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 
 import CustomButtom from "../custom-button/CustomButtom";
 import FormInput from "../form-input/FormInput";
@@ -11,7 +10,6 @@ import { auth, signInWithGoogle } from "../../firebase/firebase.util";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [succsess, setSuccsess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,13 +19,10 @@ const SignIn = () => {
 
       setEmail("");
       setPassword("");
-      setSuccsess(true);
     } catch (error) {
       console.log(error);
     }
   };
-
-  if (succsess) return <Redirect to="/" />;
 
   return (
     <div className="sign-in">

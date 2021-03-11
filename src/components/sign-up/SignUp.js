@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.util";
 import CustomButtom from "../custom-button/CustomButtom";
@@ -12,7 +11,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-  const [succsess, setSuccsess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +34,6 @@ const SignUp = () => {
       console.error(error);
     }
   };
-
-  if (succsess) return <Redirect to="/" />;
 
   return (
     <div className="sign-up">
