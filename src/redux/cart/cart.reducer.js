@@ -3,7 +3,7 @@ import { addItemToCart } from "./cart.utils";
 
 const INITIAL_STATE = { hidden: true, cartItems: [] };
 
-const cartDropdownReducer = (state = INITIAL_STATE, action) => {
+const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CartActionTypes.TOGGLE_CART_HIDDEN:
       return {
@@ -20,4 +20,4 @@ const cartDropdownReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default cartDropdownReducer;
+export default cartReducer;
