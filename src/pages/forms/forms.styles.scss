@@ -4,4 +4,9 @@
   justify-content: space-around;
   margin: 30px auto;
   align-items: flex-start;
+
+  @media screen and (max-width: 800px) {
+    width: 90%;
+    flex-direction: column;
+  }
 }
